@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import {data } from "./util/data"
+import "./App.css";
+import Mainpage from "./component/Mainpage";
+import Profile from "./component/Profile";
+import { useState } from "react";
 
 function App() {
+  const [isLogin, setIsLogin] = useState(false);
+  const [index , setIndex] =useState()
+  function check(username, password){
+    console.log(username,password)
+    data.map((user,i)=>{
+      console.log(user)
+      if(user.name===username){
+
+        if(user.password === password ){
+          setIsLogin(true)
+          setIndex(i)
+        }
+      }
+
+    })
+   
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {isLogin ? <Profile logout={setIsLogin} data={data} index={index}/> : <Mainpage check={check}/>}
     </div>
   );
 }
